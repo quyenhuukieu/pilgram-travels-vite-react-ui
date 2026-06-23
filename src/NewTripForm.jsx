@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTrip } from './MyTripSlice.js';
 
 
 export default function NewTripForm ({ onCreateClicked }) {
 
     const [inputText, setInputText] = useState('');
+    const dispatch = useDispatch();
 
     return (
         <div className="new-trip-form">
@@ -14,9 +17,8 @@ export default function NewTripForm ({ onCreateClicked }) {
                 onChange={(e) => setInputText(e.target.value)} />
 
             <button onClick={() => {
-                onCreateClicked(inputText);
+                dispatch(addTrip(inputText));
                 setInputText('');
-            
             }}>Create Trip</button>
         </div>
     );

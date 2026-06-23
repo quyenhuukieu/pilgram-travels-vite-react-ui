@@ -1,13 +1,16 @@
+import { useDispatch } from 'react-redux';
+import { markTripCompleted, deleteTrip } from './MyTripSlice.js';
 
+export default function MyTripItem({ trip }) {
+    const dispatch = useDispatch();
 
-export default function MyTripItem({ trip, onCompletedClicked, onDeleteClicked  }) {
     return (
         <div className="my-trip-item">
-            <h3>{trip.text} - {trip.Date}</h3>
-            {trip.isCompleted && <p className="completed">Completed</p>}
-            {trip.isCompleted
-                ? <button onClick={() => onDeleteClicked(trip.text)}>Delete Trip</button>
-                : <button onClick={() => onCompletedClicked(trip.text)}>Mark as Completed</button>}
+            <h3>{trip.destination} - {trip.date}</h3>
+            {trip.completed && <p className="completed">Completed</p>}
+            {trip.completed
+                ? <button onClick={() => dispatch(deleteTrip(trip.id))}>Delete Trip</button>
+                : <button onClick={() => dispatch(markTripCompleted(trip.id))}>Mark as Completed</button>}
         </div>
     );
 }
