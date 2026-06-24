@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux'
 import MyTripItem from './MyTripItem'
 import NewTripForm from './NewTripForm'
+import { getCompletedTrips, getIncompleteTrips, getLoadingState } from './selectors'
 
 export default function MyTrip() {
-    const tripsAreLoading = useSelector(state => !state.loading.value.completed);
-    const trips = useSelector(state => state.trips.value);
-
-    const completedTrips = trips.filter((t) => t.completed);
-    const incompleteTrips = trips.filter((t) => !t.completed);
+    const tripsAreLoading = useSelector(getLoadingState);
+    const completedTrips = useSelector(getCompletedTrips);
+    const incompleteTrips = useSelector(getIncompleteTrips);
 
     return (
         <div>
@@ -19,13 +18,13 @@ export default function MyTrip() {
                 : (
                     <>
                     <h3>Completed Trips:</h3>
-                    {completedTrips.map((trip, index) => (
-                        <MyTripItem key={index} trip={trip} />
+                    {completedTrips.map((trip) => (
+                        <MyTripItem key={trip.id} trip={trip} />
                     ))}
 
                     <h3>Incomplete Trips:</h3>
-                    {incompleteTrips.map((trip, index) => (
-                        <MyTripItem key={index} trip={trip} />
+                    {incompleteTrips.map((trip) => (
+                        <MyTripItem key={trip.id} trip={trip} />
                     ))}
                     </>
                 )}
