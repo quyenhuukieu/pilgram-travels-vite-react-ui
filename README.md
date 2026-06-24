@@ -1,75 +1,58 @@
-# React + TypeScript + Vite
+# Pilgram Travels UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for managing a user's travel itineraries. This app lists completed and incomplete trips, lets users add a trip, and supports marking trips completed or deleting completed trips.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + Vite 8
+- Redux Toolkit + React Redux
+- Axios
+- styled-components
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Node.js 20+ (or current LTS)
+- npm
+- Pilgram Travels backend running at `http://localhost:8080`
 
-Note: This will impact Vite dev & build performances.
+The Vite dev server proxies `/api/*` to `http://localhost:8080` (configured in `vite.config.ts`).
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open the local Vite URL shown in the terminal (typically `http://localhost:5173`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `npm run dev` - Start the development server
+- `npm run build` - Type-check and build for production
+- `npm run preview` - Preview the production build
+- `npm run lint` - Run ESLint
+
+## API usage
+
+The app currently uses a fixed user id (`userId: 1`) and calls:
+
+- `GET /api/itineraries/user/1`
+- `POST /api/itineraries`
+- `PUT /api/itineraries/:id`
+- `DELETE /api/itineraries/:id`
+
+## Project structure
+
+```text
+src/
+  App.tsx            # App bootstrap and initial trip loading
+  main.tsx           # Redux store + React root
+  MyTrip.jsx         # Main trip list view
+  MyTripItem.jsx     # Per-trip actions (complete/delete)
+  NewTripForm.jsx    # Trip creation form
+  MyTripSlice.js     # Trip state slice
+  loadingSlice.js    # Loading state slice
+  selectors.js       # Derived trip selectors
+  thunks.js          # Async API actions
 ```
