@@ -8,20 +8,8 @@ export const tripsSlice = createSlice({
     value: [],
   },
   reducers: {
-    // Mark a trip as completed by its ID
-    markTripCompleted: (state, action) => {
-      const trip = state.value.find(t => t.id === action.payload);
-      if (trip) { 
-        trip.completed = true;
-      }
-    },
-    // Remove a trip from the state by its ID
-    deleteTrip: (state, action) => {
-      state.value = state.value.filter(t => t.id !== action.payload);
-    },
     // Update the trips state with the new list of trips
     updateTrips: (state, action) => {
-      console.log('Updating trips with payload:', action.payload);
       state.value = action.payload;
     }
   },
@@ -38,4 +26,4 @@ export const tripsSlice = createSlice({
 export const selectTrips = (state) => state.trips.value
 
 // Action creators are generated for each case reducer function
-export const { markTripCompleted, deleteTrip, updateTrips } = tripsSlice.actions;
+export const { updateTrips } = tripsSlice.actions;

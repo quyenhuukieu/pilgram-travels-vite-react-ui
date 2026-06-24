@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 // Define the loading slice with initial state and reducers
 // The loading slice manages the loading state of the application, 
 // indicating whether data is being loaded and whether the loading was successful.
-export const loadingSlice = createSlice({
+export const loadingSliceDef = {
     name: 'loading',
     initialState: {
         value: {
@@ -29,7 +29,9 @@ export const loadingSlice = createSlice({
             state.value.successful = false;
         }
     }
-});
+}
 
+// Create the loading slice using the defined slice definition
+export const loadingSlice = createSlice(loadingSliceDef);
 // Action creators are generated for each case reducer function
 export const { loadingStarted, loadingCompleted, loadingFailed } = loadingSlice.actions;
